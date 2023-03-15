@@ -4,16 +4,18 @@ declare(strict_types=1);
 
 namespace App\MinimalRestClientPhp\Contracts;
 
+use App\MinimalRestClientPhp\Http\Request;
+
 interface IHttp {
   public function index(): string;
 
-  public function show(string $id): string;
+  public function show(Request $request): string;
 
-  public function read(?string $id): string;
+  public function read(Request $request): string;
 
-  public function store();
+  public function store(Request $request);
 
-  public function update();
+  public function update(Request $request);
 
-  public function destroy();
+  public function destroy(Request $request);
 }

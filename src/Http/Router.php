@@ -9,12 +9,12 @@ use Exception;
 
 final class Router
 {
-  private string $requestMethod;
+  private string $routeMethod;
   private IHttp $controller;
-  private ?string $param;
 
-  public function __construct() {
-    $this->requestMethod = match(strtolower($_SERVER['REQUEST_METHOD'])) {
+
+  public function __construct(private Request $request) {
+    $this->routeMethod = match(strtolower($_SERVER['REQUEST_METHOD'])) {
       'get'     => 'read',
       'post'    => 'store',
       'patch'   => 'update',
@@ -25,12 +25,15 @@ final class Router
     $route = $this->explodeRoute();
 
     $this->controller = $this->createController(empty($route[0]) ? 'index' : $route[0]);
-    $this->param = $route[1] ?? null;
+    $param = $route[1] ?? null;
 
+    if (!empty($param)) {
+      $this->request->setParams(['param' => $param]);
+    }
   }
 
   public function resolve() {
-    return $this->controller->{$this->requestMethod}($this->param);
+    return $this->controller->{$this->routeMethod}($this->request);
   }
 
   private function explodeRoute(): array {

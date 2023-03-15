@@ -1,8 +1,10 @@
 <?php
 
-// declare(strict_type=1);
+declare(strict_types=1);
 
 namespace App\MinimalRestClientPhp\Controllers;
+
+use App\MinimalRestClientPhp\Http\Request;
 
 final class UsersController extends Controller {
 
@@ -10,7 +12,9 @@ final class UsersController extends Controller {
     return 'Users Index page';
   }
 
-  public function show(string $id): string {
-    return "#{$id} User";
+  public function show(Request $request): string {
+    $result = "#{$request->getParams()['param']} User";
+
+    return $this->response(200, $result);
   }
 }
