@@ -9,6 +9,7 @@ class Request
   private string $requestUri;
   private ?string $requestQuery;
   private string $method;
+  private string $requestMethod;
   private ?array $payload;
   private array $params = [];
 
@@ -18,7 +19,9 @@ class Request
 
     $this->requestQuery = parse_url($_SERVER['REQUEST_URI'], PHP_URL_QUERY);
 
-    $this->method = match(strtolower($_SERVER['REQUEST_METHOD'])) {
+    $this->requestMethod = strtolower($_SERVER['REQUEST_METHOD']);
+
+    $this->method = match($this->requestMethod) {
       'get'     => 'read',
       'post'    => 'store',
       'patch'   => 'update',
@@ -26,7 +29,10 @@ class Request
       'default' => 'read'
     };
 
-    $this->payload = json_decode(file_get_contents('php://input'), true);
+    // TODO: add payload validation
+    $this->payload = in_array($this->requestMethod, ['post', 'patch'])
+      ? json_decode(file_get_contents('php://input'), true)
+      : null;
   }
 
   public function getMethod(): string
