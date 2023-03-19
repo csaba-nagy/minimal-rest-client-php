@@ -20,9 +20,11 @@ final class Router
 
     $this->controller = $this->createController(empty($router) ? 'index' : $router);
 
-    if (!empty($param)) {
-      $this->request->setParams(['param' => $param]);
+    if (empty($param)) {
+      return;
     }
+
+    $this->request->setParams(['param' => $param]);
   }
 
   public function resolve() {
