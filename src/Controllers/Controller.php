@@ -41,6 +41,6 @@ class Controller implements IHttp {
    protected function response(int $statusCode, array | string $body) {
     $response = new Response($statusCode, $body);
 
-    return $response->send();
+    return $response->sendJSON();
    }
 }
