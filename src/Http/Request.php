@@ -65,4 +65,9 @@ class Request
     return explode('/', substr($this->uri,1));
   }
 
+  public function hasPayload(): bool
+  {
+    return $this->payload !== null;
+  }
+
 }
