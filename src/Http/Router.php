@@ -13,7 +13,7 @@ final class Router
 
 
   public function __construct(private Request $request) {
-    $route = $this->explodeRoute();
+    $route = $this->request->getExplodedUri();
 
     $this->controller = $this->createController(empty($route[0]) ? 'index' : $route[0]);
     $param = $route[1] ?? null;
@@ -25,10 +25,6 @@ final class Router
 
   public function resolve() {
     return $this->controller->{$this->request->getMethod()}($this->request);
-  }
-
-  private function explodeRoute(): array {
-    return explode('/', substr(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH),1));
   }
 
   private function createController (string $controllerName): IHttp {
