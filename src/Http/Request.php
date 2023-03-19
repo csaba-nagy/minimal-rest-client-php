@@ -6,22 +6,22 @@ namespace App\MinimalRestClientPhp\Http;
 
 class Request
 {
-  private string $requestUri;
-  private ?string $requestQuery;
+  private string $uri;
+  private ?string $query;
   private string $method;
-  private string $requestMethod;
+  private string $httpMethod;
   private ?array $payload;
   private array $params = [];
 
   public function __construct()
   {
-    $this->requestUri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+    $this->uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 
-    $this->requestQuery = parse_url($_SERVER['REQUEST_URI'], PHP_URL_QUERY);
+    $this->query = parse_url($_SERVER['REQUEST_URI'], PHP_URL_QUERY);
 
-    $this->requestMethod = strtolower($_SERVER['REQUEST_METHOD']);
+    $this->httpMethod = strtolower($_SERVER['REQUEST_METHOD']);
 
-    $this->method = match($this->requestMethod) {
+    $this->method = match($this->httpMethod) {
       'get'     => 'read',
       'post'    => 'store',
       'patch'   => 'update',
@@ -30,7 +30,7 @@ class Request
     };
 
     // TODO: add payload validation
-    $this->payload = in_array($this->requestMethod, ['post', 'patch'])
+    $this->payload = in_array($this->httpMethod, ['post', 'patch'])
       ? json_decode(file_get_contents('php://input'), true)
       : null;
   }
@@ -40,9 +40,9 @@ class Request
       return $this->method;
   }
 
-  public function getRequestUri(): string
+  public function getUri(): string
   {
-      return $this->requestUri;
+      return $this->uri;
   }
 
   public function getPayload(): ?array
@@ -62,7 +62,7 @@ class Request
 
   public function getExplodedUri() : array
   {
-    return explode('/', substr($this->requestUri,1));
+    return explode('/', substr($this->uri,1));
   }
 
 }
