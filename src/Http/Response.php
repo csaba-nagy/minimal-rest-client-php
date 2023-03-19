@@ -10,7 +10,7 @@ class Response
   {
   }
 
-  public function send(): string
+  public function sendJSON(): string
   {
     http_response_code($this->statusCode);
 
