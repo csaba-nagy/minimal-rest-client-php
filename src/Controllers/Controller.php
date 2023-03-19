@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\MinimalRestClientPhp\Controllers;
 
 use App\MinimalRestClientPhp\Contracts\IHttp;
+use App\MinimalRestClientPhp\Enums\HttpStatusCodes;
 use App\MinimalRestClientPhp\Http\Request;
 use App\MinimalRestClientPhp\Http\Response;
 use Exception;
@@ -38,7 +39,7 @@ class Controller implements IHttp {
     throw new Exception('Not implemented!');
    }
 
-   protected function response(int $statusCode, array | string $body) {
+   protected function response(HttpStatusCodes $statusCode, array | string $body) {
     $response = new Response($statusCode, $body);
 
     return $response->sendJSON();
