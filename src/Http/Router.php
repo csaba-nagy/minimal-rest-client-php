@@ -34,10 +34,14 @@ final class Router
   private function createController (string $controllerName): IHttp {
     $controller = 'App\MinimalRestClientPhp\Controllers\\' . ucfirst($controllerName) . 'Controller';
 
-    if(!class_exists($controller)) {
-      throw new Exception('Invalid Route');
+    if (class_exists($controller)) {
+      $class = new $controller();
+
+      if (method_exists($class, $this->request->getMethod())) {
+        return $class;
+      }
     }
 
-    return new $controller();
+    throw new Exception('Invalid route or request method!');
   }
 }
