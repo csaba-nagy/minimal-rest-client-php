@@ -8,7 +8,7 @@ class Request
 {
   private string $requestUri;
   private ?string $requestQuery;
-  private string $requestMethod;
+  private string $method;
   private ?array $payload;
   private array $params = [];
 
@@ -18,14 +18,20 @@ class Request
 
     $this->requestQuery = parse_url($_SERVER['REQUEST_URI'], PHP_URL_QUERY);
 
-    $this->requestMethod = strtolower($_SERVER['REQUEST_METHOD']);
+    $this->method = match(strtolower($_SERVER['REQUEST_METHOD'])) {
+      'get'     => 'read',
+      'post'    => 'store',
+      'patch'   => 'update',
+      'delete'  => 'destroy',
+      'default' => 'read'
+    };
 
     $this->payload = json_decode(file_get_contents('php://input'), true);
   }
 
-  public function getRequestMethod(): string
+  public function getMethod(): string
   {
-      return $this->requestMethod;
+      return $this->method;
   }
 
   public function getRequestUri(): string
