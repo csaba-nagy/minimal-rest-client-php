@@ -15,8 +15,10 @@ final class Router
   public function __construct(private Request $request) {
     $route = $this->request->getExplodedUri();
 
-    $this->controller = $this->createController(empty($route[0]) ? 'index' : $route[0]);
-    $param = $route[1] ?? null;
+    $router = $route[0] ?? null;
+    $param =  $route[1] ?? null;
+
+    $this->controller = $this->createController(empty($router) ? 'index' : $router);
 
     if (!empty($param)) {
       $this->request->setParams(['param' => $param]);
