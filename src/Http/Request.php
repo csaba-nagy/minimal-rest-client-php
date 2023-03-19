@@ -54,4 +54,9 @@ class Request
     return $this->params;
   }
 
+  public function getExplodedUri() : array
+  {
+    return explode('/', substr($this->requestUri,1));
+  }
+
 }
