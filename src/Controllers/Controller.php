@@ -10,11 +10,9 @@ use App\MinimalRestClientPhp\Http\Request;
 use App\MinimalRestClientPhp\Http\Response;
 use Exception;
 
-class Controller implements IHttp {
+abstract class Controller implements IHttp {
 
-  public function index(): string {
-    throw new Exception('Not implemented!');
-  }
+  abstract public function index(): string;
 
   public function read(Request $request): string {
 
