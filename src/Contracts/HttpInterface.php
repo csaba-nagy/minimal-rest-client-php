@@ -6,7 +6,8 @@ namespace App\MinimalRestClientPhp\Contracts;
 
 use App\MinimalRestClientPhp\Http\Request;
 
-interface IHttp {
+interface HttpInterface
+{
   public function index(): string;
 
   public function show(Request $request): string;

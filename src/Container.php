@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\MinimalRestClientPhp;
 
 use App\MinimalRestClientPhp\Exceptions\ContainerException;
@@ -44,8 +46,6 @@ class Container implements ContainerInterface
     return isset($this->entries[$id]);
   }
 
-  // To support interfaces, the type of $resolver should be callable or string
-  // because when an interface has been added as dependency, it will be registered as a key, and the resolvable class will be the value
   public function set(string $id, callable | string $resolver)
   {
     $this->entries[$id] = $resolver;
