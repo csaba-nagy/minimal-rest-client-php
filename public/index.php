@@ -4,13 +4,14 @@ declare(strict_types=1);
 
 require_once '../vendor/autoload.php';
 
-use App\MinimalRestClientPhp\Http\Request;
-use App\MinimalRestClientPhp\Http\Router;
+use App\MinimalRestClientPhp\Container;
+use App\MinimalRestClientPhp\Application;
 
 try {
-  $router = new Router(new Request());
+  $container = new Container();
+  $app = $container->get(Application::class);
 
-  var_dump($router->resolve());
-} catch (\Exception $err) {
-  var_dump($err->getMessage());
+  var_dump($app->main());
+} catch (\Exception $error) {
+  var_dump($error->getMessage());
 }
