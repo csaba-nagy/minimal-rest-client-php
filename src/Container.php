@@ -18,7 +18,11 @@ class Container implements ContainerInterface
     if ($this->has($id)) {
       $entry = $this->entries[$id];
 
-      return $entry($this);
+      if (is_callable($entry)) {
+        return $entry($this);
+      }
+
+      $id = $entry;
     }
 
     return $this->resolve($id);
@@ -29,7 +33,9 @@ class Container implements ContainerInterface
     return isset($this->entries[$id]);
   }
 
-  public function set(string $id, callable $resolver)
+  // To support interfaces, the type of $resolver should be callable or string
+  // because when an interface has been added as dependency, it will be registered as a key, and the resolvable class will be the value
+  public function set(string $id, callable | string $resolver)
   {
     $this->entries[$id] = $resolver;
   }
