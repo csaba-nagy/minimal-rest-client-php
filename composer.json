@@ -1,18 +1,21 @@
 {
-    "name": "app/minimal-rest-client-php",
-    "type": "project",
-    "license": "MIT",
-    "autoload": {
-        "psr-4": {
-            "App\\MinimalRestClientPhp\\": "src/"
-        }
-    },
-    "authors": [
-        {
-            "name": "Csaba Nagy",
-            "email": "n.csaba1991@gmail.com"
-        }
-    ],
-    "minimum-stability": "dev",
-    "require": {}
+  "name": "app/minimal-rest-client-php",
+  "type": "project",
+  "license": "MIT",
+  "autoload": {
+    "psr-4": {
+      "App\\MinimalRestClientPhp\\": "src/"
+    }
+  },
+  "authors": [
+    {
+      "name": "Csaba Nagy",
+      "email": "n.csaba1991@gmail.com"
+    }
+  ],
+  "scripts": {
+    "dev": "php -S localhost:8080 -t public"
+  },
+  "minimum-stability": "dev",
+  "require": {}
 }
