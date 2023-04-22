@@ -11,7 +11,18 @@ use ReflectionUnionType;
 
 class Container implements ContainerInterface
 {
+  private static ?ContainerInterface $instance;
+
   private array $entries = [];
+
+  public static function getInstance(): ContainerInterface
+  {
+    return static::$instance ??= new static();
+  }
+
+  private function __construct()
+  {
+  }
 
   public function get(string $id)
   {
