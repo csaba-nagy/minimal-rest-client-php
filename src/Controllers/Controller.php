@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace App\MinimalRestClientPhp\Controllers;
 
-use App\MinimalRestClientPhp\Contracts\IHttp;
+use App\MinimalRestClientPhp\Contracts\HttpInterface;
 use App\MinimalRestClientPhp\Enums\HttpStatusCodes;
-use App\MinimalRestClientPhp\Http\Request;
-use App\MinimalRestClientPhp\Http\Response;
+use App\MinimalRestClientPhp\Http\{ Request, Response };
+
 use Exception;
 
-abstract class Controller implements IHttp {
+abstract class Controller implements HttpInterface {
 
   abstract public function index(): string;
 

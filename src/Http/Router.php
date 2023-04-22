@@ -4,15 +4,16 @@ declare(strict_types=1);
 
 namespace App\MinimalRestClientPhp\Http;
 
-use App\MinimalRestClientPhp\Contracts\IHttp;
+use App\MinimalRestClientPhp\Contracts\HttpInterface;
 use Exception;
 
 final class Router
 {
-  private IHttp $controller;
+  private HttpInterface $controller;
 
 
-  public function __construct(private Request $request) {
+  public function __construct(private Request $request)
+  {
     $route = $this->request->getExplodedUri();
 
     $router = $route[0] ?? null;
@@ -27,11 +28,13 @@ final class Router
     $this->request->setParams(['param' => $param]);
   }
 
-  public function resolve() {
+  public function resolve()
+  {
     return $this->controller->{$this->request->getMethod()}($this->request);
   }
 
-  private function createController (string $controllerName): IHttp {
+  private function createController(string $controllerName): HttpInterface
+  {
     $controller = 'App\MinimalRestClientPhp\Controllers\\' . ucfirst($controllerName) . 'Controller';
 
     if (class_exists($controller)) {

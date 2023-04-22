@@ -21,7 +21,7 @@ class Request
 
     $this->httpMethod = strtolower($_SERVER['REQUEST_METHOD']);
 
-    $this->method = match($this->httpMethod) {
+    $this->method = match ($this->httpMethod) {
       'get'     => 'read',
       'post'    => 'store',
       'patch'   => 'update',
@@ -37,17 +37,17 @@ class Request
 
   public function getMethod(): string
   {
-      return $this->method;
+    return $this->method;
   }
 
   public function getUri(): string
   {
-      return $this->uri;
+    return $this->uri;
   }
 
   public function getPayload(): ?array
   {
-      return $this->payload;
+    return $this->payload;
   }
 
   public function setParams(array $params)
@@ -60,14 +60,13 @@ class Request
     return $this->params;
   }
 
-  public function getExplodedUri() : array
+  public function getExplodedUri(): array
   {
-    return explode('/', substr($this->uri,1));
+    return explode('/', substr($this->uri, 1));
   }
 
   public function hasPayload(): bool
   {
     return $this->payload !== null;
   }
-
 }
